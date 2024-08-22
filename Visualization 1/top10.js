@@ -27,8 +27,25 @@ function buildChart(platform) {
           b: 100
         }
       };
-Plotly.newPlot("top10", plotdata, layout);
-})}
+    Plotly.newPlot("top100", plotdata, layout);
+
+    let bubbledata = [{
+      x: sliceddata.map(object => object["All Time Rank"]),
+      y: sliceddata.map(object => object[platform]),
+      text: sliceddata.map(object => object["Shazam Counts"]),
+      mode: 'markers',
+      marker:{
+        color: sliceddata.map(object => object["Shazam Counts"]),
+        colorscale: "Earth",
+        size: sliceddata.map(object => object[platform])
+      }
+    }];
+    let bubble_layout = {
+      title: 'Shazam Counts by Popularity',
+      height: 600,
+      width: 1500 
+    };
+  Plotly.newPlot('bubble', bubbledata, bubble_layout);})}
 
 // Function to run on page load
 function init() {
