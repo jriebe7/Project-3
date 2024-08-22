@@ -41,7 +41,7 @@ function buildChart(platform) {
       }
     }];
     let bubble_layout = {
-      title: 'Shazam Counts by Popularity',
+      title: 'Shazam Counts by Steaming Platform Popularity',
       height: 600,
       width: 1500 
     };
