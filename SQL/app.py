@@ -8,22 +8,33 @@ app = Flask(__name__)
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-database = config['postgresql']['database']
 user = config['postgresql']['user']
 password = config['postgresql']['password']
 host = config['postgresql']['host']
+port = config['postgresql']['port']
+database = config['postgresql']['database']
 
-@app.route('/data', methods=['GET'])
-def get_data():
+@app.route("/")
+def homepage():
+    """List all available API routes."""
+    return (
+        "Available Routes:<br/>"
+        "/spotify_data<br/>"
+    )
+
+@app.route('/spotify_data', methods=['GET'])
+def get_spotify_data():
     conn = psycopg2.connect(
-    database=database,
     user=user,
     password=password,
-    host=host
+    host=host,
+    port=port,
+    database=database
 )
     cur = conn.cursor()
-    cur.execute("SELECT * FROM spoitfy_data")
-    data = [dict(row) for row in cur.fetchall()]
+    cur.execute("SELECT * FROM spotify_data")
+    columns = [col[0] for col in cur.description]
+    data = [dict(zip(columns, row)) for row in cur.fetchall()]
     conn.close()
     return jsonify(data)
 
