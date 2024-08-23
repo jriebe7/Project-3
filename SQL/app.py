@@ -1,9 +1,11 @@
 from flask import Flask, jsonify
 import psycopg2
 import configparser
+import pandas as pd
+from flask_cors import CORS
 
 app = Flask(__name__)
-
+CORS(app)
 # Read the database connection information from the config.ini file
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -20,6 +22,8 @@ def homepage():
     return (
         "Available Routes:<br/>"
         "/spotify_data<br/>"
+        "/platforms_data<br/>"
+        "/artists_data<br/>"
     )
 
 @app.route('/spotify_data', methods=['GET'])
@@ -37,6 +41,23 @@ def get_spotify_data():
     data = [dict(zip(columns, row)) for row in cur.fetchall()]
     conn.close()
     return jsonify(data)
+
+@app.route('/platforms_data', methods=['GET'])
+def get_platform():
+    
+    platforms_data = ['Spotify Streams',
+        'YouTube Views',
+        'TikTok Views',
+        'Pandora Streams']
+    
+    return jsonify(platforms_data)
+
+@app.route('/artists_data', methods=['GET'])
+def get_artists():
+    df = pd.read_csv('../Cleaned_Datasets/cleaned_data_visual_two.csv')
+    df = df.where(pd.notnull(df), None)
+    top_ten_artists = df['Artist'].value_counts().head(10).index.tolist()
+    return jsonify(top_ten_artists)
 
 if __name__ == '__main__':
     app.run(debug=True)
