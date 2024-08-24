@@ -45,10 +45,10 @@ def get_spotify_data():
 @app.route('/platforms_data', methods=['GET'])
 def get_platform():
     
-    platforms_data = ['Spotify Streams',
-        'YouTube Views',
-        'TikTok Views',
-        'Pandora Streams']
+    platforms_data = ['SpotifyStreams',
+        'YouTubeViews',
+        'TikTokViews',
+        'PandoraStreams']
     
     return jsonify(platforms_data)
 
