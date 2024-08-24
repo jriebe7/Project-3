@@ -4,7 +4,7 @@ CREATE TABLE spotify_data (
     Artist VARCHAR(500),
     ReleaseDate DATE,
     ISRC VARCHAR(500),
-    AllTimeRank VARCHAR(500),
+    AllTimeRank INT,
     TrackScore FLOAT,
     SpotifyStreams INT,
     SpotifyPlaylistCount VARCHAR(500),
@@ -25,7 +25,7 @@ CREATE TABLE spotify_data (
     PandoraStreams INT,
     PandoraTrackStations VARCHAR(500),
     SoundcloudStreams VARCHAR(500),
-    ShazamCounts VARCHAR(500),
+    ShazamCounts INT,
     TIDALPopularity VARCHAR(500),
     ExplicitTrack INT
 );

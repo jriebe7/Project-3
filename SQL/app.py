@@ -54,7 +54,7 @@ def get_platform():
 
 @app.route('/artists_data', methods=['GET'])
 def get_artists():
-    df = pd.read_csv('../Cleaned_Datasets/cleaned_data_visual_two.csv')
+    df = pd.read_csv('../Cleaned_Datasets/cleaned_dataset_df.csv')
     df = df.where(pd.notnull(df), None)
     top_ten_artists = df['Artist'].value_counts().head(10).index.tolist()
     return jsonify(top_ten_artists)
