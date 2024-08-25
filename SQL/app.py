@@ -3,6 +3,7 @@ import psycopg2
 import configparser
 import pandas as pd
 from flask_cors import CORS
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -41,6 +42,14 @@ def get_spotify_data():
     data = [dict(zip(columns, row)) for row in cur.fetchall()]
     conn.close()
     return jsonify(data)
+
+@app.route('/save-data', methods=['POST'])
+def save_data():
+    data = data.json
+    json_file_path = os.path.join(os.getcwd(), 'data.json')
+
+    with open(json_file_path, 'w') as json_file:
+        json.dump(data, json_file, indent=4)
 
 @app.route('/platforms_data', methods=['GET'])
 def get_platform():

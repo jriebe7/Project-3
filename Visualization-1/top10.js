@@ -1,25 +1,25 @@
 // Build the chart
 function buildChart(platform) {
   
-  d3.json("http://localhost:5000/spotify_data").then((data) => {
-    console.log("init")
+  d3.json("../Cleaned_Datasets/new_cleaned_data.json").then((data) => {
+    // console.log("init")
 
     
     // get the metadata field
-    let metadata = data;
-    let platformname = platform.replace(" ", "").toLowerCase();
-    console.log(platformname)
+    let metadata = data.metaData;
+    // let platformname = data.platformname.replace(" ", "").toLowerCase();
+    // console.log(platformname)
     // Sort the metadata based on the platform selected
-    let sorteddata = metadata.sort((a, b) => b[platformname]-a[platformname]);
-    console.log(sorteddata)
+    let sorteddata = metadata.sort((a, b) => b[platform]-a[platform]);
+    // console.log(sorteddata)
     
     let sliceddata = sorteddata.slice(0,10).reverse();
     console.log(sliceddata)
     //Create bar chart
     let trace1 = {
-      x: sliceddata.map(object => object[platformname]),
-      y: sliceddata.map(object => object.track),
-      text: sliceddata.map(object => object.artist),
+      x: sliceddata.map(object => object[platform]),
+      y: sliceddata.map(object => object.Track),
+      text: sliceddata.map(object => object.Artist),
       name: "Top 10 Songs and Number of Plays",
       type: "bar",
       orientation: "h",
@@ -30,7 +30,7 @@ function buildChart(platform) {
     };
     
     let plotdata = [trace1];
-    console.log(plotdata);
+    // console.log(plotdata);
     
     let layout = {
       title: "Top 10 Songs and Number of Plays",
@@ -45,16 +45,16 @@ function buildChart(platform) {
     Plotly.newPlot("top10", plotdata, layout);
 
   let trace2 = {
-    x: sliceddata.map(object => object[platformname]),
-    y: sliceddata.map(object => object.shazamcounts),
-    text: sliceddata.map(object => object.track),
+    x: sliceddata.map(object => object[platform]),
+    y: sliceddata.map(object => object["Shazam Counts"]),
+    text: sliceddata.map(object => object.Track),
     mode: 'markers',
     marker: {
-        color: sliceddata.map(object => object.shazamcounts),
+        color: sliceddata.map(object => object["Shazam Counts"]),
         colorscale: "Twilight",
-        size: sliceddata.map(object => object.shazamcounts),
+        size: sliceddata.map(object => object["Shazam Counts"]),
         sizemode: 'area',
-        sizeref: 2.0 * Math.max(...sliceddata.map(object => object.shazamcounts)) / (200**2),
+        sizeref: 2.0 * Math.max(...sliceddata.map(object => object["Shazam Counts"])) / (200**2),
         sizemin: 2
           
     }
@@ -78,10 +78,10 @@ Plotly.newPlot("bubble", plotdata2, bubble_layout);
 // Function to run on page load
 function init() {
 console.log("init")
-d3.json("http://localhost:5000/platforms_data").then((data) => {
+d3.json("../Cleaned_Datasets/new_cleaned_data.json").then((data) => {
   console.log("init")
   // Get the names field
-  let platformnames = data;
+  let platformnames = data.names;
 
   // Use d3 to select the dropdown with id of `#selPlatform`
   let dropdown = d3.select("#selPlatform");
@@ -106,5 +106,5 @@ function optionChanged(newplatform) {
 // Build charts and metadata panel each time a new sample is selected
 buildChart(newplatform);
 }
-console.log("outer")
+// console.log("outer")
 init();
