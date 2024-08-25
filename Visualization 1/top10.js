@@ -37,7 +37,7 @@ function buildChart(platform) {
       marker:{
         color: sliceddata.map(object => object["Shazam Counts"]),
         colorscale: "Earth",
-        size: sliceddata.map(object => object[platform])
+        size: sliceddata.map(object => object["Shazam Counts"])
       }
     }];
     let bubble_layout = {

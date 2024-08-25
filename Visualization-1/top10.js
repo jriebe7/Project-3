@@ -7,14 +7,15 @@ function buildChart(platform) {
     
     // get the metadata field
     let metadata = data.metaData;
+
     // let platformname = data.platformname.replace(" ", "").toLowerCase();
     // console.log(platformname)
     // Sort the metadata based on the platform selected
-    let sorteddata = metadata.sort((a, b) => b[platform]-a[platform]);
+    let sorteddata = metadata.sort((a, b) => b[platform] - a[platform]);
     // console.log(sorteddata)
     
     let sliceddata = sorteddata.slice(0,10).reverse();
-    console.log(sliceddata)
+    // console.log(sliceddata)
     //Create bar chart
     let trace1 = {
       x: sliceddata.map(object => object[platform]),
@@ -35,7 +36,7 @@ function buildChart(platform) {
     let layout = {
       title: "Top 10 Songs and Number of Plays",
       margin: {
-        l: 100,
+        l: 250,
         r: 100,
         t: 100,
         b: 100
@@ -79,7 +80,7 @@ Plotly.newPlot("bubble", plotdata2, bubble_layout);
 function init() {
 console.log("init")
 d3.json("../Cleaned_Datasets/new_cleaned_data.json").then((data) => {
-  console.log("init")
+  // console.log("init")
   // Get the names field
   let platformnames = data.names;
 
@@ -89,8 +90,8 @@ d3.json("../Cleaned_Datasets/new_cleaned_data.json").then((data) => {
   // Use the list of sample names to populate the select options
   // Hint: Inside a loop, you will need to use d3 to append a new
   // option for each sample name.
-  for (let x = 0; x < platformnames.length; x++){
-    dropdown.append("option").text(platformnames[x]).property("value", platformnames[x])
+  for (let x = 0; x < data.names.length; x++){
+    dropdown.append("option").text(data.names[x]).property("value", data.names[x])
       };
 
   // Get the first sample from the list
@@ -100,11 +101,11 @@ d3.json("../Cleaned_Datasets/new_cleaned_data.json").then((data) => {
   buildChart(firstplatform);
 
 });
-}
+};
 // Function for event listener
 function optionChanged(newplatform) {
 // Build charts and metadata panel each time a new sample is selected
 buildChart(newplatform);
-}
+};
 // console.log("outer")
 init();
