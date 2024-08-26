@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    #vis.vega-embed {
+      width: 100%;
+      display: flex;
+    }
+
+    #vis.vega-embed details,
+    #vis.vega-embed details summary {
+      position: relative;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-lite@5.8.0"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "layer": [{"mark": {"type": "arc"}, "encoding": {"color": {"field": "Platform", "type": "nominal"}, "theta": {"field": "Reach", "type": "quantitative"}, "tooltip": [{"field": "Platform", "type": "nominal"}, {"field": "Reach", "type": "quantitative"}, {"field": "Percentage", "type": "quantitative"}]}, "title": "Playlist Reach Distribution for \"MILLION DOLLAR BABY\""}, {"mark": {"type": "text", "color": "black", "radius": 120, "size": 14}, "encoding": {"text": {"field": "Percentage", "format": ".1f%", "type": "quantitative"}, "theta": {"field": "Reach", "type": "quantitative"}}}], "data": {"name": "data-d7e73aac6a21589f9eca03e84a91ecf8"}, "$schema": "https://vega.github.io/schema/vega-lite/v5.8.0.json", "datasets": {"data-d7e73aac6a21589f9eca03e84a91ecf8": [{"Platform": "SpotifyPlaylistReach", "Reach": 196631588, "Percentage": 53.89716854143588}, {"Platform": "YouTubePlaylistReach", "Reach": 150597000, "Percentage": 41.278982555105124}, {"Platform": "DeezerPlaylistReach", "Reach": 17598718, "Percentage": 4.823848903458997}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>

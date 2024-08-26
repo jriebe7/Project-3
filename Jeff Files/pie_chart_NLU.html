@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    #vis.vega-embed {
+      width: 100%;
+      display: flex;
+    }
+
+    #vis.vega-embed details,
+    #vis.vega-embed details summary {
+      position: relative;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-lite@5.8.0"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "layer": [{"mark": {"type": "arc"}, "encoding": {"color": {"field": "Platform", "type": "nominal"}, "theta": {"field": "Reach", "type": "quantitative"}, "tooltip": [{"field": "Platform", "type": "nominal"}, {"field": "Reach", "type": "quantitative"}, {"field": "Percentage", "type": "quantitative"}]}, "title": "Playlist Reach Distribution for \"Not Like Us\""}, {"mark": {"type": "text", "color": "black", "radius": 120, "size": 14}, "encoding": {"text": {"field": "Percentage", "format": ".1f", "type": "quantitative"}, "theta": {"field": "Reach", "type": "quantitative"}}}], "data": {"name": "data-762b8c6a4f31a9d71c298977a986622b"}, "$schema": "https://vega.github.io/schema/vega-lite/v5.8.0.json", "datasets": {"data-762b8c6a4f31a9d71c298977a986622b": [{"Platform": "SpotifyPlaylistReach", "Reach": 174597137, "Percentage": 51.141521346427076}, {"Platform": "YouTubePlaylistReach", "Reach": 156380400, "Percentage": 45.80562832919079}, {"Platform": "DeezerPlaylistReach", "Reach": 10422430, "Percentage": 3.0528503243821343}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>
